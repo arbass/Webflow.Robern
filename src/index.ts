@@ -1,7 +1,8 @@
-import { greetUser } from '$utils/greet';
+import { loadMoreEvents } from '$utils/load-more-events';
+import { pageAncors } from '$utils/page-ancors';
 
 window.Webflow ||= [];
 window.Webflow.push(() => {
-  const name = 'John Doe';
-  greetUser(name);
+  pageAncors();
+  loadMoreEvents();
 });

@@ -10,7 +10,7 @@ export const loadMoreEvents = () => {
         // console.log('cmsload Successfully loaded!');
         listInstances.forEach((list) => {
           list.on('renderitems', (renderedItems) => {
-            console.log(renderedItems);
+            // console.log(renderedItems);
           });
         });
       },

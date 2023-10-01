@@ -19,14 +19,23 @@ export const prdocutCardPopup = () => {
     function cardClickFunction() {
       const allProductCards = document.querySelectorAll('.card-click-area');
       const allProductCards_closeButtons = document.querySelectorAll('.popup_close-button');
+      const allProductPopupsBg = document.querySelectorAll('.product-popup_overlay');
       allProductCards.forEach((card) => {
         card.addEventListener('click', function () {
-          const currentPoup = card.parentElement.querySelector('.product-popup');
-          currentPoup.classList.remove('hide');
+          const currentPopup = card.parentElement.querySelector('.product-popup');
+          currentPopup.classList.remove('hide');
         });
       });
       allProductCards_closeButtons.forEach((closeButton) => {
         closeButton.addEventListener('click', function () {
+          const allProductPopups = document.querySelectorAll('.product-popup');
+          allProductPopups.forEach((productPopup) => {
+            productPopup.classList.add('hide');
+          });
+        });
+      });
+      allProductPopupsBg.forEach((bg) => {
+        bg.addEventListener('click', function () {
           const allProductPopups = document.querySelectorAll('.product-popup');
           allProductPopups.forEach((productPopup) => {
             productPopup.classList.add('hide');

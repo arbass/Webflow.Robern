@@ -5,9 +5,11 @@ export const pageAncors = () => {
   if (pageAncors_el.length) {
     pageAncors_el.forEach((sectionCategory) => {
       const firstItemInSection = sectionCategory.querySelector('[current-category]');
-      const currentCategoryName = firstItemInSection.getAttribute('current-category');
-      const currentAncDot = sectionCategory.querySelector('.section_category-anc');
-      currentAncDot.setAttribute('id', currentCategoryName);
+      if (firstItemInSection) {
+        const currentCategoryName = firstItemInSection.getAttribute('current-category');
+        const currentAncDot = sectionCategory.querySelector('.section_category-anc');
+        currentAncDot.setAttribute('id', currentCategoryName);
+      }
     });
   }
 };

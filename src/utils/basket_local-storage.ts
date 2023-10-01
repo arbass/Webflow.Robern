@@ -39,11 +39,11 @@ export const basketLocalStorage = () => {
 
     function basketLocalStorageFunction() {
       if (!localStorage.getItem('cart')) {
-        const initialCart = {
+        const cart = {
           itemCount: 0,
           items: {},
         };
-        localStorage.setItem('cart', JSON.stringify(initialCart));
+        localStorage.setItem('cart', JSON.stringify(cart));
       } else {
         const cart = JSON.parse(localStorage.getItem('cart'));
         const { itemCount } = cart;
@@ -61,8 +61,11 @@ export const basketLocalStorage = () => {
         const currentBasketDiv = item.querySelector('.menu-sale_basket-item');
 
         currentAddToCartButton.addEventListener('click', function () {
-          //
-          console.log('test');
+          const cartData = JSON.parse(localStorage.getItem('cart'));
+          const currentListOfItems = cartData.items;
+
+          // currentListOfItems = currentListOfItems + ',' + currentAddToCartButtonSlug + '/' + '1';
+          // console.log(currentListOfItems);
         });
       });
     }

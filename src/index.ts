@@ -4,6 +4,7 @@ import { dimensionsFunction } from '$utils/dimensions';
 import { loadMoreEvents } from '$utils/load-more-events';
 import { pageAncors } from '$utils/page-ancors';
 import { prdocutCardPopup } from '$utils/product-card_popup';
+import { testLocalStorage } from '$utils/test-local-storage';
 
 window.Webflow ||= [];
 window.Webflow.push(() => {
@@ -13,4 +14,5 @@ window.Webflow.push(() => {
   prdocutCardPopup();
   dimensionsFunction();
   basketLocalStorage();
+  testLocalStorage();
 });

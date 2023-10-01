@@ -1,4 +1,5 @@
 import { basketJs } from '$utils/basket';
+import { basketLocalStorage } from '$utils/basket_local-storage';
 import { dimensionsFunction } from '$utils/dimensions';
 import { loadMoreEvents } from '$utils/load-more-events';
 import { pageAncors } from '$utils/page-ancors';
@@ -11,4 +12,5 @@ window.Webflow.push(() => {
   basketJs();
   prdocutCardPopup();
   dimensionsFunction();
+  basketLocalStorage();
 });

@@ -80,7 +80,6 @@ export const basketLocalStorage = () => {
       }
     }
     function basketLocalStorageFunction() {
-      startCardsChecking();
       if (!localStorage.getItem('cart')) {
         const cart = {
           itemCount: 0,

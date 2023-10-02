@@ -36,8 +36,51 @@ export const basketLocalStorage = () => {
     window.addEventListener('storage', function (event) {
       basketLocalStorageFunction();
     });
+    function startCardsChecking() {
+      const allCardButtons = document.querySelectorAll('[basket-current-item-slug]');
+      allCardButtons.forEach((button) => {
+        checkCurrentCardProductInBasket(button);
+      });
+    }
+    function checkCurrentCardProductInBasket(button) {
+      const currentAddToCartButtonSlug = button.getAttribute('basket-current-item-slug');
 
+      if (button.classList.contains('is-in-cart')) {
+        const itemNameToDelete = currentAddToCartButtonSlug;
+        const cartData = JSON.parse(localStorage.getItem('cart'));
+
+        if (cartData && cartData.items && cartData.items.length > 0) {
+          cartData.items = cartData.items.filter((item) => item.title !== itemNameToDelete);
+          // console.log('фильтр сработал');
+
+          localStorage.setItem('cart', JSON.stringify(cartData));
+        }
+
+        updateCountInBasket(cartData.items.length);
+        button.classList.remove('is-in-cart');
+        button.textContent = 'Add to cart';
+      } else {
+        const cartData = JSON.parse(localStorage.getItem('cart'));
+        const newItem = {
+          title: currentAddToCartButtonSlug,
+          currentProductCount: 1,
+        };
+
+        if (!cartData.items) {
+          cartData.items = [];
+        } else {
+          // console.log('у нас уже есть массив');
+        }
+        cartData.items.push(newItem);
+        localStorage.setItem('cart', JSON.stringify(cartData));
+        updateCountInBasket(cartData.items.length);
+
+        button.classList.add('is-in-cart');
+        button.textContent = 'Remove from cart';
+      }
+    }
     function basketLocalStorageFunction() {
+      startCardsChecking();
       if (!localStorage.getItem('cart')) {
         const cart = {
           itemCount: 0,
@@ -54,45 +97,10 @@ export const basketLocalStorage = () => {
       const all_ListItems = document.querySelectorAll('.cl-i_category');
       all_ListItems.forEach((item) => {
         const currentAddToCartButton = item.querySelector('[basket-current-item-slug]');
-        const currentAddToCartButtonSlug = currentAddToCartButton.getAttribute(
-          'basket-current-item-slug'
-        );
-
         const currentBasketDiv = item.querySelector('.menu-sale_basket-item');
 
         currentAddToCartButton.addEventListener('click', function () {
-          if (currentAddToCartButton.classList.contains('is-in-cart')) {
-            const itemNameToDelete = currentAddToCartButtonSlug;
-            const cartData = JSON.parse(localStorage.getItem('cart'));
-
-            if (cartData && cartData.items && cartData.items.length > 0) {
-              cartData.items = cartData.items.filter((item) => item.title !== itemNameToDelete);
-
-              localStorage.setItem('cart', JSON.stringify(cartData));
-            }
-
-            updateCountInBasket(cartData.items.length);
-            currentAddToCartButton.classList.remove('is-in-cart');
-            currentAddToCartButton.textContent = 'Add to cart';
-          } else {
-            const cartData = JSON.parse(localStorage.getItem('cart'));
-            const newItem = {
-              title: currentAddToCartButtonSlug,
-              currentProductCount: 1,
-            };
-
-            if (!cartData.items) {
-              cartData.items = [];
-            } else {
-              console.log('у нас уже есть массив');
-            }
-            cartData.items.push(newItem);
-            localStorage.setItem('cart', JSON.stringify(cartData));
-            updateCountInBasket(cartData.items.length);
-
-            currentAddToCartButton.classList.add('is-in-cart');
-            currentAddToCartButton.textContent = 'Remove from cart';
-          }
+          checkCurrentCardProductInBasket(currentAddToCartButton);
         });
       });
     }

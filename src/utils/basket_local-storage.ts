@@ -41,7 +41,7 @@ export const basketLocalStorage = () => {
       if (!localStorage.getItem('cart')) {
         const cart = {
           itemCount: 0,
-          items: {},
+          items: [],
         };
         localStorage.setItem('cart', JSON.stringify(cart));
       } else {
@@ -61,11 +61,38 @@ export const basketLocalStorage = () => {
         const currentBasketDiv = item.querySelector('.menu-sale_basket-item');
 
         currentAddToCartButton.addEventListener('click', function () {
-          const cartData = JSON.parse(localStorage.getItem('cart'));
-          const currentListOfItems = cartData.items;
+          if (currentAddToCartButton.classList.contains('is-in-cart')) {
+            const itemNameToDelete = currentAddToCartButtonSlug;
+            const cartData = JSON.parse(localStorage.getItem('cart'));
 
-          // currentListOfItems = currentListOfItems + ',' + currentAddToCartButtonSlug + '/' + '1';
-          // console.log(currentListOfItems);
+            if (cartData && cartData.items && cartData.items.length > 0) {
+              cartData.items = cartData.items.filter((item) => item.title !== itemNameToDelete);
+
+              localStorage.setItem('cart', JSON.stringify(cartData));
+            }
+
+            updateCountInBasket(cartData.items.length);
+            currentAddToCartButton.classList.remove('is-in-cart');
+            currentAddToCartButton.textContent = 'Add to cart';
+          } else {
+            const cartData = JSON.parse(localStorage.getItem('cart'));
+            const newItem = {
+              title: currentAddToCartButtonSlug,
+              currentProductCount: 1,
+            };
+
+            if (!cartData.items) {
+              cartData.items = [];
+            } else {
+              console.log('у нас уже есть массив');
+            }
+            cartData.items.push(newItem);
+            localStorage.setItem('cart', JSON.stringify(cartData));
+            updateCountInBasket(cartData.items.length);
+
+            currentAddToCartButton.classList.add('is-in-cart');
+            currentAddToCartButton.textContent = 'Remove from cart';
+          }
         });
       });
     }

@@ -51,7 +51,7 @@ export const basketLocalStorage = () => {
 
         if (cartData && cartData.items && cartData.items.length > 0) {
           cartData.items = cartData.items.filter((item) => item.title !== itemNameToDelete);
-          // console.log('фильтр сработал');
+          // console.log('filter triggered');
 
           localStorage.setItem('cart', JSON.stringify(cartData));
         }
@@ -69,7 +69,7 @@ export const basketLocalStorage = () => {
         if (!cartData.items) {
           cartData.items = [];
         } else {
-          // console.log('у нас уже есть массив');
+          // console.log('we already have an array');
         }
         cartData.items.push(newItem);
         localStorage.setItem('cart', JSON.stringify(cartData));
